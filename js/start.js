@@ -18,18 +18,11 @@ var renderRect = function (ctx, x, y, width, height, color) {
   ctx.fillRect(x, y, width, height);
 };
 
-var renderText = function (ctx, x, y, font, baseline, color, text) {
-  ctx.font = font;
-  ctx.textBaseline = baseline;
-  ctx.fillStyle = color;
-  ctx.fillText(text, x, y);
-};
-
 var renderTextMultiline = function (ctx, x, y, font, baseline, color, text) {
   ctx.font = font;
   ctx.textBaseline = baseline;
   ctx.fillStyle = color;
-  var lines = text.split('\n');
+  var lines = ('' + text).split('\n');
   for (var i = 0; i < lines.length; ++i) {
     ctx.fillText(lines[i], x, y);
     y += TEXT_GAP_Y;
@@ -53,8 +46,8 @@ var renderHistogram = function (ctx, time, ratio, name) {
     } else {
       renderRect(ctx, HISTOGRAM_X + (HISTOGRAM_GAP * i), HISTOGRAM_Y, HISTOGRAM_WIDTH, -(time[i] / ratio), renderBlue());
     }
-    renderText(ctx, HISTOGRAM_X + (HISTOGRAM_GAP * i), CLOUD_HEIGHT, '16px PT Mono', 'bottom', '#000000', name[i]);
-    renderText(ctx, HISTOGRAM_X + (HISTOGRAM_GAP * i), HISTOGRAM_Y - (time[i] / ratio), '16px PT Mono', 'bottom', '#000000', Math.round(time[i]));
+    renderTextMultiline(ctx, HISTOGRAM_X + (HISTOGRAM_GAP * i), CLOUD_HEIGHT, '16px PT Mono', 'bottom', '#000000', name[i]);
+    renderTextMultiline(ctx, HISTOGRAM_X + (HISTOGRAM_GAP * i), HISTOGRAM_Y - (time[i] / ratio), '16px PT Mono', 'bottom', '#000000', Math.round(time[i]));
   }
 };
 
