@@ -19,14 +19,14 @@ var renderRect = function (ctx, x, y, width, height, color) {
 };
 
 var renderTextMultiline = function (ctx, x, y, font, baseline, color, text) {
+  var lines = ('' + text).split('\n');
   ctx.font = font;
   ctx.textBaseline = baseline;
   ctx.fillStyle = color;
-  var lines = ('' + text).split('\n');
-  for (var i = 0; i < lines.length; ++i) {
-    ctx.fillText(lines[i], x, y);
+  lines.forEach(function (line) {
+    ctx.fillText(line, x, y);
     y += TEXT_GAP_Y;
-  }
+  });
 };
 
 var renderCloud = function (ctx) {
