@@ -53,7 +53,6 @@ var renderHistogram = function (ctx, time, ratio, name) {
       renderRect(ctx, histogramCurrentX, HISTOGRAM_Y, HISTOGRAM_WIDTH, -histogramHeight, 'rgba(255, 0, 0, 1)');
     } else {
       renderRect(ctx, histogramCurrentX, HISTOGRAM_Y, HISTOGRAM_WIDTH, -histogramHeight, getBlueColor(100));
-      console.log(getBlueColor(100));
     }
     renderTextMultiline(ctx, histogramCurrentX, CLOUD_HEIGHT, MESSAGE_FONT, 'bottom', '#000000', name[i]);
     renderTextMultiline(ctx, histogramCurrentX, timeY, MESSAGE_FONT, 'bottom', '#000000', timeInt);
