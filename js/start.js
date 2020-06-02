@@ -38,10 +38,8 @@ var renderCloud = function (ctx) {
   renderTextMultiline(ctx, HISTOGRAM_X, TEXT_Y, MESSAGE_FONT, 'handing', '#000000', VICTORY_MESSAGE);
 };
 
-var getBlueColor = function (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return 'hsl(242,' + Math.floor(Math.random() * (max - min)) + min + '% , 47%)';
+var getBlueColor = function (max) {
+  return 'hsl(242, ' + Math.floor(Math.random() * max) + '% , 47%)';
 };
 
 var renderHistogram = function (ctx, time, ratio, name) {
@@ -54,7 +52,8 @@ var renderHistogram = function (ctx, time, ratio, name) {
     if (name[i] === NAME) {
       renderRect(ctx, histogramCurrentX, HISTOGRAM_Y, HISTOGRAM_WIDTH, -histogramHeight, 'rgba(255, 0, 0, 1)');
     } else {
-      renderRect(ctx, histogramCurrentX, HISTOGRAM_Y, HISTOGRAM_WIDTH, -histogramHeight, getBlueColor(0, 100));
+      renderRect(ctx, histogramCurrentX, HISTOGRAM_Y, HISTOGRAM_WIDTH, -histogramHeight, getBlueColor(100));
+      console.log(getBlueColor(100));
     }
     renderTextMultiline(ctx, histogramCurrentX, CLOUD_HEIGHT, MESSAGE_FONT, 'bottom', '#000000', name[i]);
     renderTextMultiline(ctx, histogramCurrentX, timeY, MESSAGE_FONT, 'bottom', '#000000', timeInt);
