@@ -13,6 +13,7 @@ var TEXT_Y = 40;
 var TEXT_GAP_Y = 20;
 var VICTORY_MESSAGE = 'Ура вы победили!\nСписок результатов:';
 var MESSAGE_FONT = '16px PT Mono';
+var NAME = 'Вы';
 
 var renderRect = function (ctx, x, y, width, height, color) {
   ctx.fillStyle = color;
@@ -24,9 +25,10 @@ var renderTextMultiline = function (ctx, x, y, font, baseline, color, text) {
   ctx.font = font;
   ctx.textBaseline = baseline;
   ctx.fillStyle = color;
+  var yCurrentCoordinate = y;
   lines.forEach(function (line) {
-    ctx.fillText(line, x, y);
-    y += TEXT_GAP_Y;
+    ctx.fillText(line, x, yCurrentCoordinate);
+    yCurrentCoordinate += TEXT_GAP_Y;
   });
 };
 
@@ -36,22 +38,26 @@ var renderCloud = function (ctx) {
   renderTextMultiline(ctx, HISTOGRAM_X, TEXT_Y, MESSAGE_FONT, 'handing', '#000000', VICTORY_MESSAGE);
 };
 
-function creatingBlueColor(min, max) {
-  return 'hsl(242,' + Math.random() * (max - min) + min + '% , 47%)';
-}
+var getBlueColor = function (min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return 'hsl(242,' + Math.floor(Math.random() * (max - min)) + min + '% , 47%)';
+};
 
-var renderHistogram = function (ctx, time, ratio, NAME) {
-  for (var i = 0; i < NAME.length; i++) {
-    var HISTOGRAM_GAP = (GAP * i);
-    var HISTOGRAM_HEIGHT = time[i] / ratio;
-    var TIME_INT = Math.round(time[i]);
-    if (NAME[i] === 'Вы') {
-      renderRect(ctx, HISTOGRAM_X + HISTOGRAM_GAP, HISTOGRAM_Y, HISTOGRAM_WIDTH, -HISTOGRAM_HEIGHT, 'rgba(255, 0, 0, 1)');
+var renderHistogram = function (ctx, time, ratio, name) {
+  for (var i = 0; i < name.length; i++) {
+    var histogramGap = (GAP * i);
+    var histogramHeight = time[i] / ratio;
+    var timeInt = Math.round(time[i]);
+    var histogramCurrentX = HISTOGRAM_X + histogramGap;
+    var timeY = HISTOGRAM_Y - histogramHeight;
+    if (name[i] === NAME) {
+      renderRect(ctx, histogramCurrentX, HISTOGRAM_Y, HISTOGRAM_WIDTH, -histogramHeight, 'rgba(255, 0, 0, 1)');
     } else {
-      renderRect(ctx, HISTOGRAM_X + HISTOGRAM_GAP, HISTOGRAM_Y, HISTOGRAM_WIDTH, -HISTOGRAM_HEIGHT, creatingBlueColor(0, 100));
+      renderRect(ctx, histogramCurrentX, HISTOGRAM_Y, HISTOGRAM_WIDTH, -histogramHeight, getBlueColor(0, 100));
     }
-    renderTextMultiline(ctx, HISTOGRAM_X + HISTOGRAM_GAP, CLOUD_HEIGHT, MESSAGE_FONT, 'bottom', '#000000', NAME[i]);
-    renderTextMultiline(ctx, HISTOGRAM_X + HISTOGRAM_GAP, HISTOGRAM_Y - HISTOGRAM_HEIGHT, MESSAGE_FONT, 'bottom', '#000000', TIME_INT);
+    renderTextMultiline(ctx, histogramCurrentX, CLOUD_HEIGHT, MESSAGE_FONT, 'bottom', '#000000', name[i]);
+    renderTextMultiline(ctx, histogramCurrentX, timeY, MESSAGE_FONT, 'bottom', '#000000', timeInt);
   }
 };
 
