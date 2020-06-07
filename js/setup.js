@@ -41,12 +41,12 @@ var getAllWizardsInfo = function () {
 
 var renderWizards = function () {
   for (var i = 0; i < wizards.length; i++) {
+    var templateClone = wizardTemplate.cloneNode(true);
     wizardNameBlock.textContent = wizards[i].name;
     wizardCoatBlock.style.fill = wizards[i].coatColor;
     wizardEyesBlock.style.fill = wizards[i].eyesColor;
-    fragment.appendChild(wizardTemplate);
+    renderBlock.appendChild(templateClone);
   }
-  renderBlock.appendChild(fragment);
 };
 
 var renderWizardsBlock = function () {
