@@ -15,11 +15,6 @@ var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)
 var eyeColors = ['black', 'red', 'blue', 'yellow', 'green'];
 var wizards = [];
 
-var getRandomInteger = function (min, max) {
-  var rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
-};
-
 var shuffle = function (arr) {
   var j;
   var temp;
