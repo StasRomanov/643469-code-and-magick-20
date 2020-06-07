@@ -20,6 +20,18 @@ var getRandomInteger = function (min, max) {
   return Math.floor(rand);
 };
 
+var shuffle = function (arr) {
+  var j;
+  var temp;
+  for (var i = arr.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = arr[j];
+    arr[j] = arr[i];
+    arr[i] = temp;
+  }
+  return arr;
+};
+
 var getWizardsInfo = function (name, coat, eyes) {
   var wizardInfo = {
     name: name,
@@ -30,30 +42,34 @@ var getWizardsInfo = function (name, coat, eyes) {
 };
 
 var getAllWizardsInfo = function () {
+  shuffle(wizardNames);
+  shuffle(wizardSurname);
+  shuffle(coatColors);
+  shuffle(eyeColors);
   for (var i = 0; i < wizardsQuantity; i++) {
-    var name = wizardNames[getRandomInteger(0, wizardNames.length - 1)] + ' ' +
-      wizardSurname[getRandomInteger(0, wizardSurname.length - 1)];
-    var coat = coatColors[getRandomInteger(0, coatColors.length - 1)];
-    var eyes = eyeColors[getRandomInteger(0, eyeColors.length - 1)];
+    var name = wizardNames[i] + ' ' + wizardSurname[i];
+    var coat = coatColors[i];
+    var eyes = eyeColors[i];
     getWizardsInfo(name, coat, eyes);
   }
 };
 
 var renderWizards = function () {
   for (var i = 0; i < wizards.length; i++) {
-    var templateClone = wizardTemplate.cloneNode(true);
     wizardNameBlock.textContent = wizards[i].name;
     wizardCoatBlock.style.fill = wizards[i].coatColor;
     wizardEyesBlock.style.fill = wizards[i].eyesColor;
-    renderBlock.appendChild(templateClone);
+    var templateClone = wizardTemplate.cloneNode(true);
+    fragment.appendChild(templateClone);
   }
+  renderBlock.appendChild(fragment);
 };
 
 var renderWizardsBlock = function () {
-  setup.classList.remove('hidden');
-  similar.classList.remove('hidden');
   getAllWizardsInfo();
   renderWizards();
+  setup.classList.remove('hidden');
+  similar.classList.remove('hidden');
 };
 
 renderWizardsBlock();
