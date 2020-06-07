@@ -1,5 +1,5 @@
 'use strict';
-var wizardsQuantity = 4;
+var WIZARDS_QUANTITY = 4;
 var wizardTemplate = document.querySelector('#similar-wizard-template').content;
 var setup = document.querySelector('.setup');
 var similar = document.querySelector('.setup-similar');
@@ -41,7 +41,7 @@ var getAllWizardsInfo = function () {
   shuffle(wizardSurname);
   shuffle(coatColors);
   shuffle(eyeColors);
-  for (var i = 0; i < wizardsQuantity; i++) {
+  for (var i = 0; i < WIZARDS_QUANTITY; i++) {
     var name = wizardNames[i] + ' ' + wizardSurname[i];
     var coat = coatColors[i];
     var eyes = eyeColors[i];
