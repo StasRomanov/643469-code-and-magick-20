@@ -3,9 +3,6 @@ var WIZARDS_QUANTITY = 4;
 var wizardTemplate = document.querySelector('#similar-wizard-template').content;
 var setup = document.querySelector('.setup');
 var similar = document.querySelector('.setup-similar');
-var wizardNameBlock = wizardTemplate.querySelector('.setup-similar-label');
-var wizardCoatBlock = wizardTemplate.querySelector('.wizard-coat');
-var wizardEyesBlock = wizardTemplate.querySelector('.wizard-eyes');
 var renderBlock = document.querySelector('.setup-similar-list');
 var fragment = document.createDocumentFragment();
 var wizardNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
@@ -51,10 +48,13 @@ var getAllWizardsInfo = function () {
 
 var renderWizards = function () {
   for (var i = 0; i < wizards.length; i++) {
-    wizardNameBlock.textContent = wizards[i].name;
-    wizardCoatBlock.style.fill = wizards[i].coatColor;
-    wizardEyesBlock.style.fill = wizards[i].eyesColor;
     var templateClone = wizardTemplate.cloneNode(true);
+    var nameElement = templateClone.querySelector('.setup-similar-label');
+    var coatElement = templateClone.querySelector('.wizard-coat');
+    var eyesElement = templateClone.querySelector('.wizard-eyes');
+    nameElement.textContent = wizards[i].name;
+    coatElement.style.fill = wizards[i].coatColor;
+    eyesElement.style.fill = wizards[i].eyesColor;
     fragment.appendChild(templateClone);
   }
   renderBlock.appendChild(fragment);
