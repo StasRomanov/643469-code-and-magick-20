@@ -1,15 +1,15 @@
 'use strict';
 var WIZARDS_QUANTITY = 4;
 var wizardTemplate = document.querySelector('#similar-wizard-template').content;
-var setup = document.querySelector('.setup');
-var similar = document.querySelector('.setup-similar');
-var renderBlock = document.querySelector('.setup-similar-list');
+var setupBlock = document.querySelector('.setup');
+var similarBlock = document.querySelector('.setup-similar');
+var wizardListBlock = document.querySelector('.setup-similar-list');
 var fragment = document.createDocumentFragment();
-var wizardNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var wizardSurname = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)',
+var WIZARDS_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+var WIZARDS_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+var WIZARDS_COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)',
   'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var eyeColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARDS_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var wizards = [];
 
 var shuffle = function (arr) {
@@ -24,25 +24,25 @@ var shuffle = function (arr) {
   return arr;
 };
 
-var getWizardsInfo = function (name, coat, eyes) {
+var createWizardsInfo = function (name, coat, eyes, array) {
   var wizardInfo = {
     name: name,
     eyesColor: eyes,
     coatColor: coat
   };
-  wizards.push(wizardInfo);
+  array.push(wizardInfo);
 };
 
-var getAllWizardsInfo = function () {
-  shuffle(wizardNames);
-  shuffle(wizardSurname);
-  shuffle(coatColors);
-  shuffle(eyeColors);
+var createAllWizardsInfo = function () {
+  shuffle(WIZARDS_NAMES);
+  shuffle(WIZARDS_SURNAMES);
+  shuffle(WIZARDS_COAT_COLORS);
+  shuffle(WIZARDS_EYES_COLORS);
   for (var i = 0; i < WIZARDS_QUANTITY; i++) {
-    var name = wizardNames[i] + ' ' + wizardSurname[i];
-    var coat = coatColors[i];
-    var eyes = eyeColors[i];
-    getWizardsInfo(name, coat, eyes);
+    var name = WIZARDS_NAMES[i] + ' ' + WIZARDS_SURNAMES[i];
+    var coat = WIZARDS_COAT_COLORS[i];
+    var eyes = WIZARDS_EYES_COLORS[i];
+    createWizardsInfo(name, coat, eyes, wizards);
   }
 };
 
@@ -57,14 +57,14 @@ var renderWizards = function () {
     eyesElement.style.fill = wizards[i].eyesColor;
     fragment.appendChild(templateClone);
   }
-  renderBlock.appendChild(fragment);
+  wizardListBlock.appendChild(fragment);
 };
 
 var renderWizardsBlock = function () {
-  getAllWizardsInfo();
+  createAllWizardsInfo();
   renderWizards();
-  setup.classList.remove('hidden');
-  similar.classList.remove('hidden');
+  setupBlock.classList.remove('hidden');
+  similarBlock.classList.remove('hidden');
 };
 
 renderWizardsBlock();
