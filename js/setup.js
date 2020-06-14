@@ -3,14 +3,12 @@ var WIZARDS_QUANTITY = 4;
 var LEFT_MOUSE_CODE = 0;
 var ENTER_KEY = 'Enter';
 var ESC_KEY = 'Escape';
-var FILL = 'fill';
-var BCG = 'backgroundColor';
 var WIZARDS_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var WIZARDS_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var WIZARDS_COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)',
   'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARDS_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-var WIZARD_FIREBALLS_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var WIZARDS_FIREBALLS_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var wizardTemplate = document.querySelector('#similar-wizard-template').content;
 var setupBlock = document.querySelector('.setup');
 var similarBlock = document.querySelector('.setup-similar');
@@ -83,7 +81,7 @@ var renderWizards = function () {
   wizardListBlock.appendChild(fragment);
 };
 
-var renderSetup = function (renderOrNot) {
+var renderOrNotSetup = function (renderOrNot) {
   if (renderOrNot) {
     setupBlock.classList.remove('hidden');
     similarBlock.classList.remove('hidden');
@@ -96,13 +94,33 @@ var renderSetup = function (renderOrNot) {
 var renderNewItemColor = function (item, colorsArray, fillMethod, inputField) {
   if (fillMethod === 'fill') {
     var randColorFill = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
+    while (randColorFill + '' === item.style.fill) {
+      randColorFill = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
+    }
     item.style.fill = randColorFill;
     inputField.value = randColorFill;
   }
   if (fillMethod === 'backgroundColor') {
     var randColorBcg = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
+    while (randColorFill + '' === item.style.fill) {
+      randColorBcg = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
+    }
     item.style.backgroundColor = randColorBcg;
     inputField.value = randColorBcg;
+  }
+};
+
+var addOrNotListener = function (addOrNot) {
+  if (addOrNot) {
+    setupOpenButton.removeEventListener('click', setupOpenButtonListener, false);
+    setupOpenIcon.removeEventListener('keydown', setupOpenButtonListener, false);
+    setupCloseButton.addEventListener('click', setupCloseButtonListener, false);
+    document.addEventListener('keydown', setupCloseButtonListener, false);
+  } else {
+    setupOpenButton.addEventListener('click', setupOpenButtonListener, false);
+    setupOpenIcon.addEventListener('keydown', setupOpenButtonListener, false);
+    setupCloseButton.removeEventListener('click', setupCloseButtonListener, false);
+    document.removeEventListener('keydown', setupCloseButtonListener, false);
   }
 };
 
@@ -111,54 +129,52 @@ var renderWizardsBlock = function () {
   renderWizards();
 };
 
-setupOpenButton.addEventListener('click', function (evt) {
+var setupOpenButtonListener = function (evt) {
   if (evt.button === LEFT_MOUSE_CODE) {
-    renderSetup(true);
+    renderOrNotSetup(true);
   }
-});
-
-setupOpenIcon.addEventListener('keydown', function (evt) {
   if (evt.code === ENTER_KEY) {
-    renderSetup(true);
+    renderOrNotSetup(true);
   }
-});
+  addOrNotListener(true);
+};
 
-setupCloseButton.addEventListener('click', function (evt) {
-  if (evt.button === LEFT_MOUSE_CODE) {
-    renderSetup(false);
-  }
-});
-
-setupCloseButton.addEventListener('keydown', function (evt) {
-  if (evt.code === ENTER_KEY) {
-    renderSetup(false);
-  }
-});
-
-document.addEventListener('keydown', function (evt) {
+var setupCloseButtonListener = function (evt) {
   if (evt.code === ESC_KEY) {
     if (document.activeElement !== nameWizardInput) {
-      renderSetup(false);
+      renderOrNotSetup(false);
+      addOrNotListener(false);
     }
+  } else {
+    if (evt.button === LEFT_MOUSE_CODE) {
+      renderOrNotSetup(false);
+    }
+    if (evt.code === ENTER_KEY) {
+      renderOrNotSetup(false);
+    }
+    addOrNotListener(false);
   }
-});
+};
 
 mainWizardCoat.addEventListener('click', function (evt) {
   if (evt.button === LEFT_MOUSE_CODE) {
-    renderNewItemColor(mainWizardCoat, WIZARDS_COAT_COLORS, FILL, mainWizardCoatInput);
+    renderNewItemColor(mainWizardCoat, WIZARDS_COAT_COLORS, 'fill', mainWizardCoatInput);
   }
 });
 
 mainWizardEyes.addEventListener('click', function (evt) {
   if (evt.button === LEFT_MOUSE_CODE) {
-    renderNewItemColor(mainWizardEyes, WIZARDS_EYES_COLORS, FILL, mainWizardEyesInput);
+    renderNewItemColor(mainWizardEyes, WIZARDS_EYES_COLORS, 'fill', mainWizardEyesInput);
   }
 });
 
 mainFireball.addEventListener('click', function (evt) {
   if (evt.button === LEFT_MOUSE_CODE) {
-    renderNewItemColor(mainFireball, WIZARD_FIREBALLS_COLORS, BCG, mainWizardFireballInput);
+    renderNewItemColor(mainFireball, WIZARDS_FIREBALLS_COLORS, 'backgroundColor', mainWizardFireballInput);
   }
 });
+
+setupOpenButton.addEventListener('click', setupOpenButtonListener, false);
+setupOpenIcon.addEventListener('keydown', setupOpenButtonListener, false);
 
 renderWizardsBlock();
