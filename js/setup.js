@@ -81,8 +81,8 @@ var renderWizards = function () {
   wizardListBlock.appendChild(fragment);
 };
 
-var renderOrNotSetup = function (renderOrNot) {
-  if (renderOrNot) {
+var renderSetupToggle = function (toggle) {
+  if (toggle) {
     setupBlock.classList.remove('hidden');
     similarBlock.classList.remove('hidden');
   } else {
@@ -94,7 +94,7 @@ var renderOrNotSetup = function (renderOrNot) {
 var renderNewItemColor = function (item, colorsArray, fillMethod, inputField) {
   if (fillMethod === 'fill') {
     var randColorFill = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
-    while (randColorFill + '' === item.style.fill) {
+    while (String(randColorFill) === item.style.fill) {
       randColorFill = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
     }
     item.style.fill = randColorFill;
@@ -102,7 +102,7 @@ var renderNewItemColor = function (item, colorsArray, fillMethod, inputField) {
   }
   if (fillMethod === 'backgroundColor') {
     var randColorBcg = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
-    while (randColorFill + '' === item.style.fill) {
+    while (String(randColorBcg) === item.style.backgroundColor) {
       randColorBcg = colorsArray[getRandomInteger(0, colorsArray.length - 1)];
     }
     item.style.backgroundColor = randColorBcg;
@@ -110,50 +110,53 @@ var renderNewItemColor = function (item, colorsArray, fillMethod, inputField) {
   }
 };
 
-var addOrNotListener = function (addOrNot) {
-  if (addOrNot) {
-    setupOpenButton.removeEventListener('click', setupOpenButtonListener, false);
-    setupOpenIcon.removeEventListener('keydown', setupOpenButtonListener, false);
-    setupCloseButton.addEventListener('click', setupCloseButtonListener, false);
-    document.addEventListener('keydown', setupCloseButtonListener, false);
+var addListenerToggle = function (toggle) {
+  if (toggle) {
+    setupOpenButton.removeEventListener('click', onSetupOpenButtonClick, false);
+    setupOpenIcon.removeEventListener('keydown', onSetupOpenIconKeydown, false);
+    setupCloseButton.addEventListener('click', onSetupCloseButtonClick, false);
+    document.addEventListener('keydown', onDocumentKeydown, false);
   } else {
-    setupOpenButton.addEventListener('click', setupOpenButtonListener, false);
-    setupOpenIcon.addEventListener('keydown', setupOpenButtonListener, false);
-    setupCloseButton.removeEventListener('click', setupCloseButtonListener, false);
-    document.removeEventListener('keydown', setupCloseButtonListener, false);
+    setupOpenButton.addEventListener('click', onSetupOpenButtonClick, false);
+    setupOpenIcon.addEventListener('keydown', onSetupOpenIconKeydown, false);
+    setupCloseButton.removeEventListener('click', onSetupCloseButtonClick, false);
+    document.removeEventListener('keydown', onDocumentKeydown, false);
+  }
+};
+
+var onSetupOpenButtonClick = function (evt) {
+  if (evt.button === LEFT_MOUSE_CODE) {
+    renderSetupToggle(true);
+  }
+  addListenerToggle(true);
+};
+
+var onSetupOpenIconKeydown = function (evt) {
+  if (evt.code === ENTER_KEY) {
+    renderSetupToggle(true);
+  }
+  addListenerToggle(true);
+};
+
+var onSetupCloseButtonClick = function (evt) {
+  if (evt.button === LEFT_MOUSE_CODE) {
+    renderSetupToggle(false);
+  }
+  addListenerToggle(false);
+};
+
+var onDocumentKeydown = function (evt) {
+  if (evt.code === ESC_KEY) {
+    if (document.activeElement !== nameWizardInput) {
+      renderSetupToggle(false);
+      addListenerToggle(false);
+    }
   }
 };
 
 var renderWizardsBlock = function () {
   createAllWizardsInfo();
   renderWizards();
-};
-
-var setupOpenButtonListener = function (evt) {
-  if (evt.button === LEFT_MOUSE_CODE) {
-    renderOrNotSetup(true);
-  }
-  if (evt.code === ENTER_KEY) {
-    renderOrNotSetup(true);
-  }
-  addOrNotListener(true);
-};
-
-var setupCloseButtonListener = function (evt) {
-  if (evt.code === ESC_KEY) {
-    if (document.activeElement !== nameWizardInput) {
-      renderOrNotSetup(false);
-      addOrNotListener(false);
-    }
-  } else {
-    if (evt.button === LEFT_MOUSE_CODE) {
-      renderOrNotSetup(false);
-    }
-    if (evt.code === ENTER_KEY) {
-      renderOrNotSetup(false);
-    }
-    addOrNotListener(false);
-  }
 };
 
 mainWizardCoat.addEventListener('click', function (evt) {
@@ -174,7 +177,7 @@ mainFireball.addEventListener('click', function (evt) {
   }
 });
 
-setupOpenButton.addEventListener('click', setupOpenButtonListener, false);
-setupOpenIcon.addEventListener('keydown', setupOpenButtonListener, false);
+setupOpenButton.addEventListener('click', onSetupOpenButtonClick, false);
+setupOpenIcon.addEventListener('keydown', onSetupOpenIconKeydown, false);
 
 renderWizardsBlock();
