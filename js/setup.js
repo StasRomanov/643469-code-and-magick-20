@@ -116,11 +116,17 @@ var addListenerToggle = function (toggle) {
     setupOpenIcon.removeEventListener('keydown', onSetupOpenIconKeydown, false);
     setupCloseButton.addEventListener('click', onSetupCloseButtonClick, false);
     document.addEventListener('keydown', onDocumentKeydown, false);
+    mainWizardCoat.addEventListener('click', onMainWizardCoatClick, false);
+    mainWizardEyes.addEventListener('click', onMainWizardEyesClick, false);
+    mainFireball.addEventListener('click', onMainFireball, false);
   } else {
     setupOpenButton.addEventListener('click', onSetupOpenButtonClick, false);
     setupOpenIcon.addEventListener('keydown', onSetupOpenIconKeydown, false);
     setupCloseButton.removeEventListener('click', onSetupCloseButtonClick, false);
     document.removeEventListener('keydown', onDocumentKeydown, false);
+    mainWizardCoat.removeEventListener('click', onMainWizardCoatClick, false);
+    mainWizardEyes.removeEventListener('click', onMainWizardEyesClick, false);
+    mainFireball.removeEventListener('click', onMainFireball, false);
   }
 };
 
@@ -154,30 +160,30 @@ var onDocumentKeydown = function (evt) {
   }
 };
 
+var onMainWizardCoatClick = function (evt) {
+  if (evt.button === LEFT_MOUSE_CODE) {
+    renderNewItemColor(mainWizardCoat, WIZARDS_COAT_COLORS, 'fill', mainWizardCoatInput);
+  }
+};
+
+var onMainWizardEyesClick = function (evt) {
+  if (evt.button === LEFT_MOUSE_CODE) {
+    renderNewItemColor(mainWizardEyes, WIZARDS_EYES_COLORS, 'fill', mainWizardEyesInput);
+  }
+};
+
+var onMainFireball = function (evt) {
+  if (evt.button === LEFT_MOUSE_CODE) {
+    renderNewItemColor(mainFireball, WIZARDS_FIREBALLS_COLORS, 'backgroundColor', mainWizardFireballInput);
+  }
+};
+
 var renderWizardsBlock = function () {
   createAllWizardsInfo();
   renderWizards();
 };
 
-mainWizardCoat.addEventListener('click', function (evt) {
-  if (evt.button === LEFT_MOUSE_CODE) {
-    renderNewItemColor(mainWizardCoat, WIZARDS_COAT_COLORS, 'fill', mainWizardCoatInput);
-  }
-});
-
-mainWizardEyes.addEventListener('click', function (evt) {
-  if (evt.button === LEFT_MOUSE_CODE) {
-    renderNewItemColor(mainWizardEyes, WIZARDS_EYES_COLORS, 'fill', mainWizardEyesInput);
-  }
-});
-
-mainFireball.addEventListener('click', function (evt) {
-  if (evt.button === LEFT_MOUSE_CODE) {
-    renderNewItemColor(mainFireball, WIZARDS_FIREBALLS_COLORS, 'backgroundColor', mainWizardFireballInput);
-  }
-});
+renderWizardsBlock();
 
 setupOpenButton.addEventListener('click', onSetupOpenButtonClick, false);
 setupOpenIcon.addEventListener('keydown', onSetupOpenIconKeydown, false);
-
-renderWizardsBlock();
