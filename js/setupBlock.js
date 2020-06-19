@@ -7,6 +7,7 @@
   var setupBlock = document.querySelector('.setup');
   var similarBlock = document.querySelector('.setup-similar');
   var nameWizardInput = document.querySelector('.setup-user-name');
+  var SAFE_GAP_ZONE = 20;
 
   var addListenerToggle = function (toggle) {
     if (toggle) {
@@ -100,13 +101,13 @@
           setupBlock.style.top = (setupBlock.offsetTop - shift.y) + 'px';
 
           if (setupBlock.offsetLeft - shift.x - NORMAL_LEFT + setupBlock.offsetWidth > document.documentElement.clientWidth) {
-            setupBlock.style.left = (setupBlock.offsetLeft - shift.x - 20) + 'px';
+            setupBlock.style.left = (setupBlock.offsetLeft - shift.x - SAFE_GAP_ZONE) + 'px';
           }
           if (setupBlock.offsetTop - shift.y < 0) {
-            setupBlock.style.top = (setupBlock.offsetTop - shift.y + 20) + 'px';
+            setupBlock.style.top = (setupBlock.offsetTop - shift.y + SAFE_GAP_ZONE) + 'px';
           }
           if (setupBlock.offsetLeft - shift.x - NORMAL_LEFT < 0) {
-            setupBlock.style.left = (setupBlock.offsetLeft - shift.x + 20) + 'px';
+            setupBlock.style.left = (setupBlock.offsetLeft - shift.x + SAFE_GAP_ZONE) + 'px';
           }
         };
 
