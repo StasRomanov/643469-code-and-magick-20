@@ -1019,3 +1019,28 @@ input[type=radio]:checked + .review-mark-label
 
     opacity: 0;
 }
+
+@keyframes color {
+  from {fill: #a5a100}
+  50% {fill: #ff6900}
+  to {fill: #a52a2a}
+}
+
+.error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: #a52a2a;
+  width: 100%;
+  height: 100%;
+  opacity: 0.95;
+}
+
+.error-description {
+  margin: 0 20% 0 20%;
+}
+
+.error-picture {
+  animation: color  1s infinite ease-in-out;
+}

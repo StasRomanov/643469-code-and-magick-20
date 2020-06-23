@@ -75,52 +75,58 @@
   setupOpenButton.addEventListener('click', onSetupOpenButtonClick, false);
   setupOpenIcon.addEventListener('keydown', onSetupOpenIconKeydown, false);
 
-  (function () {
-    var setupInputUpload = document.querySelector('.upload');
-    var NORMAL_LEFT = 405;
+  var setupInputUpload = document.querySelector('.upload');
+  var NORMAL_LEFT = 405;
 
-    var onMainPinMove = function (evt) {
-      evt.preventDefault();
-      if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
-        var startCoords = {
-          x: evt.clientX,
-          y: evt.clientY
+  var onMainPinMove = function (evt) {
+    evt.preventDefault();
+    if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
+      var startCoords = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+      var onMouseMove = function (moveEvt) {
+        moveEvt.preventDefault();
+        var shift = {
+          x: startCoords.x - moveEvt.clientX,
+          y: startCoords.y - moveEvt.clientY
         };
-        var onMouseMove = function (moveEvt) {
-          moveEvt.preventDefault();
-          var shift = {
-            x: startCoords.x - moveEvt.clientX,
-            y: startCoords.y - moveEvt.clientY
-          };
-          startCoords = {
-            x: moveEvt.clientX,
-            y: moveEvt.clientY
-          };
-
-          setupBlock.style.left = (setupBlock.offsetLeft - shift.x) + 'px';
-          setupBlock.style.top = (setupBlock.offsetTop - shift.y) + 'px';
-
-          if (setupBlock.offsetLeft - shift.x - NORMAL_LEFT + setupBlock.offsetWidth > document.documentElement.clientWidth) {
-            setupBlock.style.left = (setupBlock.offsetLeft - shift.x - SAFE_GAP_ZONE) + 'px';
-          }
-          if (setupBlock.offsetTop - shift.y < 0) {
-            setupBlock.style.top = (setupBlock.offsetTop - shift.y + SAFE_GAP_ZONE) + 'px';
-          }
-          if (setupBlock.offsetLeft - shift.x - NORMAL_LEFT < 0) {
-            setupBlock.style.left = (setupBlock.offsetLeft - shift.x + SAFE_GAP_ZONE) + 'px';
-          }
+        startCoords = {
+          x: moveEvt.clientX,
+          y: moveEvt.clientY
         };
 
-        var onMouseUp = function () {
-          evt.preventDefault();
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
-        };
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-      }
-    };
+        setupBlock.style.left = (setupBlock.offsetLeft - shift.x) + 'px';
+        setupBlock.style.top = (setupBlock.offsetTop - shift.y) + 'px';
 
-    setupInputUpload.addEventListener('mousedown', onMainPinMove, false);
-  })();
+        if (setupBlock.offsetLeft - shift.x - NORMAL_LEFT + setupBlock.offsetWidth > document.documentElement.clientWidth) {
+          setupBlock.style.left = (setupBlock.offsetLeft - shift.x - SAFE_GAP_ZONE) + 'px';
+        }
+        if (setupBlock.offsetTop - shift.y < 0) {
+          setupBlock.style.top = (setupBlock.offsetTop - shift.y + SAFE_GAP_ZONE) + 'px';
+        }
+        if (setupBlock.offsetLeft - shift.x - NORMAL_LEFT < 0) {
+          setupBlock.style.left = (setupBlock.offsetLeft - shift.x + SAFE_GAP_ZONE) + 'px';
+        }
+      };
+
+      var onMouseUp = function () {
+        evt.preventDefault();
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      };
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  };
+
+  window.hiddenSetup = function () {
+    renderSetupToggle(false);
+    setupBlock.style.position = '';
+    setupBlock.style.left = '';
+    setupBlock.style.top = '';
+    addListenerToggle(false);
+  };
+
+  setupInputUpload.addEventListener('mousedown', onMainPinMove, false);
 })();

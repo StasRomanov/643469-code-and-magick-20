@@ -13,8 +13,8 @@
       var coatElement = templateClone.querySelector('.wizard-coat');
       var eyesElement = templateClone.querySelector('.wizard-eyes');
       nameElement.textContent = window.utilData.wizards[i].name;
-      coatElement.style.fill = window.utilData.wizards[i].coatColor;
-      eyesElement.style.fill = window.utilData.wizards[i].eyesColor;
+      coatElement.style.fill = window.utilData.wizards[i].colorCoat;
+      eyesElement.style.fill = window.utilData.wizards[i].colorEye;
       fragment.appendChild(templateClone);
     }
     wizardListBlock.appendChild(fragment);
