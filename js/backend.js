@@ -62,6 +62,7 @@
   };
 
   var onSuccess = function (data) {
+    console.log(data)
     window.utilData.wizards = data;
     window.utilData.wizards = window.utilFunction.shuffle(window.utilData.wizards);
     while (window.utilData.wizards.length > window.utilData.WIZARDS_QUANTITY) {

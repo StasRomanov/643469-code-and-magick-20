@@ -26,19 +26,19 @@
 
   window.onMainWizardCoatClick = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
-      renderNewItemColor(window.utilData.mainWizardCoat, window.data.WIZARDS_COAT_COLORS, 'fill', mainWizardCoatInput);
+      renderNewItemColor(window.utilData.mainWizardCoat, window.utilData.wizards.colarCoat, 'fill', mainWizardCoatInput);
     }
   };
 
   window.onMainWizardEyesClick = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
-      renderNewItemColor(window.utilData.mainWizardEyes, window.data.WIZARDS_EYES_COLORS, 'fill', mainWizardEyesInput);
+      renderNewItemColor(window.utilData.mainWizardEyes, window.utilData.wizards.colorEyes, 'fill', mainWizardEyesInput);
     }
   };
 
   window.onMainFireball = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
-      renderNewItemColor(window.utilData.mainFireball, window.data.WIZARDS_FIREBALLS_COLORS, 'backgroundColor', mainWizardFireballInput);
+      renderNewItemColor(window.utilData.mainFireball, window.utilData.wizards.colorFireball, 'backgroundColor', mainWizardFireballInput);
     }
   };
 })();
