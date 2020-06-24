@@ -6,39 +6,53 @@
   var mainWizardFireballInput = document.getElementsByName('fireball-color');
 
   var renderNewItemColor = function (item, colorsArray, fillMethod, inputField) {
-    if (fillMethod === 'fill') {
-      var randColorFill = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)];
-      while (String(randColorFill) === item.style.fill) {
-        randColorFill = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)];
+    if (item === window.utilData.mainWizardCoat) {
+      if (fillMethod === 'fill') {
+        var randCoatFill = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)].colorCoat;
+        while (String(randCoatFill) === item.style.fill) {
+          randCoatFill = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)].colorCoat;
+        }
+        item.style.fill = randCoatFill;
+        inputField.value = randCoatFill;
       }
-      item.style.fill = randColorFill;
-      inputField.value = randColorFill;
     }
-    if (fillMethod === 'backgroundColor') {
-      var randColorBcg = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)];
-      while (String(randColorBcg) === item.style.backgroundColor) {
-        randColorBcg = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)];
+    if (item === window.utilData.mainWizardEyes) {
+      if (fillMethod === 'fill') {
+        var randEyesFill = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)].colorEyes;
+        while (String(randEyesFill) === item.style.fill) {
+          randEyesFill = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)].colorEyes;
+        }
+        item.style.fill = randEyesFill;
+        inputField.value = randEyesFill;
       }
-      item.style.backgroundColor = randColorBcg;
-      inputField.value = randColorBcg;
+    }
+    if (item === window.utilData.mainFireball) {
+      if (fillMethod === 'backgroundColor') {
+        var randColorBcg = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)].colorFireball;
+        while (String(randColorBcg) === item.style.backgroundColor) {
+          randColorBcg = colorsArray[window.utilFunction.getRandomInteger(0, colorsArray.length - 1)].colorFireball;
+        }
+        item.style.backgroundColor = randColorBcg;
+        inputField.value = randColorBcg;
+      }
     }
   };
 
   window.onMainWizardCoatClick = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
-      renderNewItemColor(window.utilData.mainWizardCoat, window.utilData.wizards.colarCoat, 'fill', mainWizardCoatInput);
+      renderNewItemColor(window.utilData.mainWizardCoat, window.utilData.allWizards, 'fill', mainWizardCoatInput);
     }
   };
 
   window.onMainWizardEyesClick = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
-      renderNewItemColor(window.utilData.mainWizardEyes, window.utilData.wizards.colorEyes, 'fill', mainWizardEyesInput);
+      renderNewItemColor(window.utilData.mainWizardEyes, window.utilData.allWizards, 'fill', mainWizardEyesInput);
     }
   };
 
   window.onMainFireball = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
-      renderNewItemColor(window.utilData.mainFireball, window.utilData.wizards.colorFireball, 'backgroundColor', mainWizardFireballInput);
+      renderNewItemColor(window.utilData.mainFireball, window.utilData.allWizards, 'backgroundColor', mainWizardFireballInput);
     }
   };
 })();
