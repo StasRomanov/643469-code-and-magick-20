@@ -6,6 +6,7 @@
   var ENTER_KEY = 'Enter';
   var ESC_KEY = 'Escape';
   var wizards = [];
+  var allWizards = [];
   var mainWizard = document.querySelector('.setup-wizard');
   var mainWizardCoat = mainWizard.querySelector('.wizard-coat');
   var mainWizardEyes = document.querySelector('.wizard-eyes');
@@ -18,6 +19,7 @@
     ENTER_KEY: ENTER_KEY,
     ESC_KEY: ESC_KEY,
     wizards: wizards,
+    allWizards: allWizards,
     mainWizard: mainWizard,
     mainWizardCoat: mainWizardCoat,
     mainWizardEyes: mainWizardEyes,
