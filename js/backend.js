@@ -66,7 +66,7 @@
     while (window.utilData.wizards.length > window.utilData.WIZARDS_QUANTITY) {
       window.utilData.wizards.splice(window.utilData.wizards.length - 1, 1);
     }
-    window.renderWizards(window.utilData.wizards);
+    window.filter();
   };
 
   var onError = function (message) {
