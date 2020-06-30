@@ -61,12 +61,12 @@
 
   var onSuccess = function (data) {
     window.utilData.wizards = data;
-    window.utilData.allWizards = data;
+    window.utilData.allWizards = JSON.parse(JSON.stringify(data));
     window.utilData.wizards = window.utilFunction.shuffle(window.utilData.wizards);
     while (window.utilData.wizards.length > window.utilData.WIZARDS_QUANTITY) {
       window.utilData.wizards.splice(window.utilData.wizards.length - 1, 1);
     }
-    window.renderWizards();
+    window.renderWizards(window.utilData.wizards);
   };
 
   var onError = function (message) {
