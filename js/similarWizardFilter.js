@@ -1,25 +1,21 @@
 'use strict';
 
 (function () {
-  var coatEyesFilter = function (colorCoat, colorEyes) {
-    return window.utilData.allWizards.filter(function (wizard) {
-      return wizard.colorCoat === colorCoat && wizard.colorEyes === colorEyes;
-    });
-  };
-  var coatFilter = function (colorCoat, colorEyes) {
-    return window.utilData.allWizards.filter(function (wizard) {
-      return wizard.colorCoat === colorCoat && wizard.colorEyes !== colorEyes;
-    });
-  };
-  var eyesFilter = function (colorCoat, colorEyes) {
-    return window.utilData.allWizards.filter(function (wizard) {
-      return wizard.colorCoat !== colorCoat && wizard.colorEyes === colorEyes;
-    });
-  };
-  var anyWizardFilter = function (colorCoat, colorEyes) {
-    return window.utilData.allWizards.filter(function (wizard) {
-      return wizard.colorCoat !== colorCoat && wizard.colorEyes !== colorEyes;
-    });
+  var result = [];
+  var getIndex = function (wizard, colorCoat, colorEyes) {
+    if (wizard.colorCoat === colorCoat && wizard.colorEyes === colorEyes) {
+      return 3;
+    }
+    if (wizard.colorCoat === colorCoat && wizard.colorEyes !== colorEyes) {
+      return 2;
+    }
+    if (wizard.colorCoat !== colorCoat && wizard.colorEyes === colorEyes) {
+      return 1;
+    }
+    if (wizard.colorCoat !== colorCoat && wizard.colorEyes !== colorEyes) {
+      return 0;
+    }
+    return 0;
   };
 
   window.filter = function () {
@@ -31,10 +27,13 @@
     if (eyeCurrentFill === '') {
       eyeCurrentFill = 'black';
     }
-    var result = coatEyesFilter(coatCurrentFill, eyeCurrentFill);
-    result = result.concat(coatFilter(coatCurrentFill, eyeCurrentFill));
-    result = result.concat(eyesFilter(coatCurrentFill, eyeCurrentFill));
-    result = result.concat(anyWizardFilter(coatCurrentFill, eyeCurrentFill));
+    result = window.utilData.allWizards.slice().sort(function (left, right) {
+      var diff = getIndex(right, coatCurrentFill, eyeCurrentFill) - getIndex(left, coatCurrentFill, eyeCurrentFill);
+      if (diff === 0) {
+        diff = result.indexOf(left) - result.indexOf(right);
+      }
+      return diff;
+    });
     result = result.slice(0, 4);
     window.renderWizards(result);
   };
