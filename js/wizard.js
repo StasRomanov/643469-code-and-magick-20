@@ -41,18 +41,21 @@
   window.onMainWizardCoatClick = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
       renderNewItemColor(window.utilData.mainWizardCoat, window.utilData.allWizards, 'fill', mainWizardCoatInput);
+      window.filter();
     }
   };
 
   window.onMainWizardEyesClick = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
       renderNewItemColor(window.utilData.mainWizardEyes, window.utilData.allWizards, 'fill', mainWizardEyesInput);
+      window.filter();
     }
   };
 
   window.onMainFireball = function (evt) {
     if (evt.button === window.utilData.LEFT_MOUSE_CODE) {
       renderNewItemColor(window.utilData.mainFireball, window.utilData.allWizards, 'backgroundColor', mainWizardFireballInput);
+      window.filter();
     }
   };
 })();
